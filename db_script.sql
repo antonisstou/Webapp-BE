@@ -1,35 +1,39 @@
-DROP DATABASE IF NOT EXISTS company;
-CREATE DATABASE company;
+DROP DATABASE IF EXISTS bookstore;
+CREATE DATABASE bookstore;
 
-\c company
+\c bookstore
 
-CREATE TABLE department (
-	id SERIAL PRIMARY KEY,
-	name VARCHAR(40) NOT NULL UNIQUE
+CREATE TABLE author (
+    id SERIAL PRIMARY KEY,
+    firstname VARCHAR(40) NOT NULL,
+    lastname VARCHAR(40) NOT NULL
 );
 
-CREATE TABLE employee (
-	id SERIAL PRIMARY KEY,
-	afm VARCHAR(9) NOT NULL UNIQUE,
-	firstname varchar(20) NOT NULL,
-	lastname varchar(40) NOT NULL,
-	birthday DATE,
-	dep_id INT,
-	CONSTRAINT fk_department FOREIGN KEY(dep_id) REFERENCES department(id) ON DELETE CASCADE
+CREATE TABLE book (
+    id SERIAL PRIMARY KEY,
+    isbn VARCHAR(13) NOT NULL UNIQUE,
+    title VARCHAR(255) NOT NULL,
+    publisher VARCHAR(60),
+    publishedyear INT,
+    author_id INT,
+    CONSTRAINT fk_author FOREIGN KEY(author_id) REFERENCES author(id) ON DELETE CASCADE
 );
-
 
 -- INSERT SOME DATA
 
-INSERT INTO department(name)
-VALUES ('DEPARTMENT 1'),
-	('DEPARTMENT 2'),
-	('DEPARTMENT 3'),
-	('DEPARTMENT 4');
+INSERT INTO author(firstname, lastname)
+VALUES ('Leo', 'Tolstoy'),
+	('Camilla', 'Lackberg'),
+	('Fyodor', 'Dostoevsky'),
+	('James', 'Patterson');
 	
-INSERT INTO employee(afm, firstname, lastname, birthday, dep_id)
-VALUES ('000000001', 'Antonis', 'Stournaras', '1997-11-07', 19),
-	('000000002', 'Eleni', 'Stournara', '1999-02-23', 19),
-	('000000003', 'Georgia', 'Stournara', '2011-01-27', 20),
-	('000000004', 'Dimitris', 'Mpougas', '2000-01-17', 21);
+INSERT INTO book(isbn, title, publisher, publishedyear, author_id)
+VALUES ('9789604460151', 'Anna Karenina', 'Agra', '1878', 1),
+	   ('9789604469987', 'War and Peace', 'Gobosty', '1867', 1),
+	   ('9781681772097', 'The Drowling', 'Metechmio', '2007', 2),
+	   ('9789137134093', 'The Lost Boy', 'Metechmio', '2009', 2),
+	   ('9789604462162', 'Crime and Punishment', 'Gobosty', '1866', 3),
+	   ('9789604462193', 'Demons', 'Gobosty', '1872', 3),
+	   ('9789604508495', '1 To Die', 'Bell', '2001', 4),
+	   ('9780316211291', 'Unlucky 13', 'Bell', '2014', 4);
 

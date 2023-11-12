@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin("*")
 @RestController
 public class BookController {
 
@@ -21,7 +22,7 @@ public class BookController {
         return new ResponseEntity<>(books, HttpStatus.OK);
     }
 
-    @PostMapping("authors/{authorId}/book/create")
+    @PostMapping("author/{authorId}/book/create")
     public ResponseEntity<Book> createBook(@PathVariable("authorId") Long author_id, @RequestBody Book book){
         Book book1 = bookService.createBook(author_id, book);
         return new ResponseEntity<>(book1, HttpStatus.CREATED);

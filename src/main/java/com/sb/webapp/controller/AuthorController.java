@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin("*")
 @RestController
 public class AuthorController {
 
@@ -20,6 +21,12 @@ public class AuthorController {
     public ResponseEntity<List<Author>> getAllAuthors(){
         List<Author> authors = authorService.getAllAuthors();
         return new ResponseEntity<>(authors, HttpStatus.OK);
+    }
+
+    @GetMapping("author/{id}")
+    public ResponseEntity<Author> getAuthorsById(@PathVariable("id") Long id){
+        Author author = authorService.getAuthorsById(id);
+        return new ResponseEntity<>(author, HttpStatus.OK);
     }
 
     @PostMapping("author/create")

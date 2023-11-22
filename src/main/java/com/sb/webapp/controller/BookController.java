@@ -11,42 +11,43 @@ import java.util.List;
 
 @CrossOrigin("*")
 @RestController
+@RequestMapping("/bookmanager")
 public class BookController {
 
     @Autowired
     private BookService bookService;
 
-    @GetMapping("authors/{authorId}/books")
+    @GetMapping("/authors/{authorId}/books")
     public ResponseEntity<List<Book>> getAllBooksByAuthor(@PathVariable("authorId") Long author_id){
         List<Book> books = bookService.getAllBooksByAuthor(author_id);
         return new ResponseEntity<>(books, HttpStatus.OK);
     }
 
-    @PostMapping("author/{authorId}/book/create")
+    @PostMapping("/author/{authorId}/book/create")
     public ResponseEntity<Book> createBook(@PathVariable("authorId") Long author_id, @RequestBody Book book){
         Book book1 = bookService.createBook(author_id, book);
         return new ResponseEntity<>(book1, HttpStatus.CREATED);
     }
 
-    @GetMapping("book/{id}")
+    @GetMapping("/book/{id}")
     public ResponseEntity<Book> getBookById(@PathVariable("id") Long id){
         Book book = bookService.getBookById(id);
         return new ResponseEntity<>(book, HttpStatus.OK);
     }
 
-    @PutMapping("book/update/{id}")
+    @PutMapping("/book/update/{id}")
     public ResponseEntity<Book> updateBook(@PathVariable("id") Long id, @RequestBody Book book){
         Book book1 = bookService.updateBook(book, id);
         return new ResponseEntity<>(book1, HttpStatus.OK);
     }
 
-    @DeleteMapping("book/delete/{id}")
+    @DeleteMapping("/book/delete/{id}")
     public ResponseEntity<HttpStatus> deleteBook(@PathVariable("id") Long id){
         bookService.deleteBookById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("book/isbn/{isbn}")
+    @GetMapping("/book/isbn/{isbn}")
     public ResponseEntity<Book> getBookByIsbn(@PathVariable("isbn") String isbn){
         Book book = bookService.getBookByIsbn(isbn);
         return new ResponseEntity<>(book, HttpStatus.OK);
